@@ -1,28 +1,40 @@
 close all;
 clc;
 clear;
-file_name = '../FreakconomicsTestPattern.txt';
-%file_name = '../HarryTestPattern.txt';
-%file_name = '../RichDadTestPattern.txt';
-%file_name = '../ToKillAMockingbirdTestPattern.txt';
-%file_name = '../GoodToGreatTestPattern.txt';
-%file_name = '../SophieTestPattern.txt';
-fileID = fopen(file_name,'r');
-lzwInput = fscanf(fileID,'%c');
-fclose(fileID);
-bit_per_code = 12;
-threshold = 2;
-maxTableSize = mpower(2,bit_per_code);
-[lzwOutput, lzwTable,real_table] = norm2lzw(lzwInput,maxTableSize,false,threshold);
-[lzwOutputd, lzwTabled,decoded_real_table] = lzw2norm(lzwOutput,maxTableSize,false,threshold);
-code_len = bit_per_code * length(lzwOutput);
-rate = (code_len/length(lzwInput));
-correct = isequal(lzwInput,lzwOutputd);   
-array = find(lzwOutput > maxTableSize);
-assert(correct,'decode incorrectly\nfile name %s\nbit_per_code %d\n',file_name,bit_per_code);
-assert(isempty(array),'max size overflow\nindex %d',array);
-fprintf('decoding correctness %d\n',correct);
-fprintf('length of the code %d\nlength of the seqence %d\nratio %f\n',code_len,length(lzwInput),rate);
+
+for k = 1 : 6
+     switch k
+        case 1
+            file_name = '../Test_patterns/FreakconomicsTestPattern.txt';
+        case 2
+            file_name = '../Test_patterns/HarryTestPattern.txt';
+        case 3
+            file_name = '../Test_patterns/RichDadTestPattern.txt';
+        case 4
+            file_name = '../Test_patterns/ToKillAMockingbirdTestPattern.txt';
+        case 5
+            file_name = '../Test_patterns/GoodToGreatTestPattern.txt';
+        case 6
+            file_name = '../Test_patterns/SophieTestPattern.txt';
+    end
+    fileID = fopen(file_name,'r');
+    lzwInput = fscanf(fileID,'%c');
+    fclose(fileID);
+    bit_per_code = 12;
+    threshold = 2;
+    maxTableSize = mpower(2,bit_per_code);
+    [lzwOutput, lzwTable,real_table] = norm2lzw(lzwInput,maxTableSize,false,threshold);
+    [lzwOutputd, lzwTabled,decoded_real_table] = lzw2norm(lzwOutput,maxTableSize,false,threshold);
+    code_len = bit_per_code * length(lzwOutput);
+    rate = (code_len/length(lzwInput));
+    correct = isequal(lzwInput,lzwOutputd);   
+    array = find(lzwOutput > maxTableSize);
+    assert(correct,'decode incorrectly\nfile name %s\nbit_per_code %d\n',file_name,bit_per_code);
+    assert(isempty(array),'max size overflow\nindex %d',array);
+    fprintf('decoding correctness %d\n',correct);
+    fprintf('length of the code %d\nlength of the seqence %d\nratio %f\n',code_len,length(lzwInput),rate);
+end
+
 function [output, table,real_table] = norm2lzw (vector, maxTableSize, restartTable,threshold)
     
     vector = double(vector(:)');
