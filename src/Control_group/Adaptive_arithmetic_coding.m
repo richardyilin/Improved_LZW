@@ -5,21 +5,9 @@ symbol = '';
 for i = 1 : 128
     symbol(1,i) = char(i-1);
 end
-for k = 1 : 6
-    switch k
-        case 1
-            file_name = '../../Test_patterns/FreakconomicsTestPattern.txt';
-        case 2
-            file_name = '../../Test_patterns/HarryTestPattern.txt';
-        case 3
-            file_name = '../../Test_patterns/RichDadTestPattern.txt';
-        case 4
-            file_name = '../../Test_patterns/ToKillAMockingbirdTestPattern.txt';
-        case 5
-            file_name = '../../Test_patterns/GoodToGreatTestPattern.txt';
-        case 6
-            file_name = '../../Test_patterns/SophieTestPattern.txt';
-    end
+file_names = ["Freakconomics" "Harry_Potter" "Rich_Dad_Poor_Dad" "To_Kill_a_Mocking_Bird" "Good_to_Great" "Sophies_World"];
+for name = file_names
+    file_name = strcat("../../Test_patterns/", name, ".txt");
     fileID = fopen(file_name,'r');
     seq = fscanf(fileID,'%c');
     fclose(fileID);
@@ -29,9 +17,11 @@ for k = 1 : 6
     assert(correct);
     code_len = length(code) + ceil(log2(length(seq)));
     rate = code_len / length(seq);
-    assert(correct,'decode incorrectly\nfile name %s\n',file_name);
-    fprintf('decoding correctness %d\n',correct);
-    fprintf('length of the code %d\nlength of the seqence %d\nratio %f\n',code_len,length(seq),rate);
+    assert(correct,'Decode incorrectly\nfile path %s\n', file_name);
+    fprintf('Decoding correctness %d\n', correct);
+    fprintf('Length of the code %d\n', code_len);
+    fprintf('Length of the seqence %d\n', length(seq));
+    fprintf('Compression ratio %f\n', rate);
 end
 
 function code = arithmetic_encoding(symbol, seq)

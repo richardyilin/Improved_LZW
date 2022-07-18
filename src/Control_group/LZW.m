@@ -2,37 +2,27 @@ close all;
 clc;
 clear;
 
-for k = 1 : 6
-     switch k
-        case 1
-            file_name = '../../Test_patterns/FreakconomicsTestPattern.txt';
-        case 2
-            file_name = '../../Test_patterns/HarryTestPattern.txt';
-        case 3
-            file_name = '../../Test_patterns/RichDadTestPattern.txt';
-        case 4
-            file_name = '../../Test_patterns/ToKillAMockingbirdTestPattern.txt';
-        case 5
-            file_name = '../../Test_patterns/GoodToGreatTestPattern.txt';
-        case 6
-            file_name = '../../Test_patterns/SophieTestPattern.txt';
-     end
+file_names = ["Freakconomics" "Harry_Potter" "Rich_Dad_Poor_Dad" "To_Kill_a_Mocking_Bird" "Good_to_Great" "Sophies_World"];
+for name = file_names
+    file_name = strcat("../../Test_patterns/", name, ".txt");
     fileID = fopen(file_name,'r');
     lzwInput = fscanf(fileID,'%c');
     fclose(fileID);
     bit_per_code = 12;
     maxTableSize = mpower(2,bit_per_code);
-    [lzwOutput, lzwTable] = norm2lzw(lzwInput,maxTableSize,false);
-    [lzwOutputd, lzwTabled] = lzw2norm(lzwOutput,maxTableSize,false);
-    code_len = bit_per_code * length(lzwOutput);
+    code = norm2lzw(lzwInput,maxTableSize,false);
+    decoded_sequence = lzw2norm(code,maxTableSize,false);
+    code_len = bit_per_code * length(code);
     rate = (code_len/length(lzwInput));
-    correct = isequal(lzwInput,lzwOutputd);
-    assert(correct,'decode incorrectly\nfile name %s\n',file_name);
-    fprintf('decoding correctness %d\n',correct);
-    fprintf('length of the code %d\nlength of the seqence %d\nratio %f\n',code_len,length(lzwInput),rate);
+    correct = isequal(lzwInput,decoded_sequence);
+    assert(correct,'Decode incorrectly\nFile path %s\n',file_name);
+    fprintf('Decoding correctness %d\n',correct);
+    fprintf('Length of the code %d\n', code_len);
+    fprintf('Length of the seqence %d\n', length(lzwInput));
+    fprintf('Compression ratio %f\n', rate);
 end
 
-function [output, table] = norm2lzw (vector, maxTableSize, restartTable)
+function output = norm2lzw (vector, maxTableSize, restartTable)
 
 vector = double(vector(:)');
 
@@ -122,7 +112,7 @@ output((outputIndex+1):end) = [];
 table.codes = table.codes(1:table.nextCode-1);
 
 end
-function [output,table] = lzw2norm (vector, maxTableSize, restartTable)
+function output = lzw2norm (vector, maxTableSize, restartTable)
 vector = vector(:)';
 
 if (nargin < 2)

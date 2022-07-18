@@ -2,40 +2,30 @@ close all;
 clc;
 clear;
 
-for k = 1 : 6
-     switch k
-        case 1
-            file_name = '../Test_patterns/FreakconomicsTestPattern.txt';
-        case 2
-            file_name = '../Test_patterns/HarryTestPattern.txt';
-        case 3
-            file_name = '../Test_patterns/RichDadTestPattern.txt';
-        case 4
-            file_name = '../Test_patterns/ToKillAMockingbirdTestPattern.txt';
-        case 5
-            file_name = '../Test_patterns/GoodToGreatTestPattern.txt';
-        case 6
-            file_name = '../Test_patterns/SophieTestPattern.txt';
-    end
+file_names = ["Freakconomics" "Harry_Potter" "Rich_Dad_Poor_Dad" "To_Kill_a_Mocking_Bird" "Good_to_Great" "Sophies_World"];
+for name = file_names
+    file_name = strcat("../Test_patterns/", name, ".txt");
     fileID = fopen(file_name,'r');
-    lzwInput = fscanf(fileID,'%c');
+    input = fscanf(fileID,'%c');
     fclose(fileID);
     bit_per_code = 12;
     threshold = 2;
     maxTableSize = mpower(2,bit_per_code);
-    [lzwOutput, lzwTable,real_table] = norm2lzw(lzwInput,maxTableSize,false,threshold);
-    [lzwOutputd, lzwTabled,decoded_real_table] = lzw2norm(lzwOutput,maxTableSize,false,threshold);
-    code_len = bit_per_code * length(lzwOutput);
-    rate = (code_len/length(lzwInput));
-    correct = isequal(lzwInput,lzwOutputd);   
-    array = find(lzwOutput > maxTableSize);
-    assert(correct,'decode incorrectly\nfile name %s\nbit_per_code %d\n',file_name,bit_per_code);
+    code = norm2lzw(input,maxTableSize,false,threshold);
+    decoded_sequence = lzw2norm(code,maxTableSize,false,threshold);
+    code_len = bit_per_code * length(code);
+    rate = (code_len/length(input));
+    correct = isequal(input,decoded_sequence);   
+    array = find(code > maxTableSize);
+    assert(correct,'Decode incorrectly\nFile path %s\nbits_per_code %d\n',file_name,bit_per_code);
     assert(isempty(array),'max size overflow\nindex %d',array);
-    fprintf('decoding correctness %d\n',correct);
-    fprintf('length of the code %d\nlength of the seqence %d\nratio %f\n',code_len,length(lzwInput),rate);
+    fprintf('Decoding correctness %d\n',correct);
+    fprintf('Length of the code %d\n', code_len);
+    fprintf('Length of the seqence %d\n', length(input));
+    fprintf('Compression ratio %f\n', rate);
 end
 
-function [output, table,real_table] = norm2lzw (vector, maxTableSize, restartTable,threshold)
+function output = norm2lzw (vector, maxTableSize, restartTable,threshold)
     
     vector = double(vector(:)');
     if (nargin < 2)
