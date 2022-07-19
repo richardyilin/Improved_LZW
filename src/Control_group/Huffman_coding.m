@@ -27,8 +27,9 @@ for name = file_names
     rate = code_len/seq_len;
     correct = isequal(inputSig,sig);
     assert(correct,'Decode incorrectly\nfile path %s\n', file_name);
+    fprintf('File path: %s\n', file_name);
     fprintf('Decoding correctness %d\n', correct);
     fprintf('Length of the code %d\n', code_len);
     fprintf('Length of the seqence %d\n', seq_len);
-    fprintf('Compression ratio %f\n', rate);
+    fprintf('Compression ratio %f\n\n', rate);
 end

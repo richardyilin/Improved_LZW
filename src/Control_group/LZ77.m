@@ -21,10 +21,11 @@ for name = file_names
     rate = code_len/seq_len;
     correct = isequal(seq,decoded);
     assert(correct,'Decode incorrectly\nfile path %s\n', file_name);
+    fprintf('File path: %s\n', file_name);
     fprintf('Decoding correctness %d\n', correct);
     fprintf('Length of the code %d\n', code_len);
     fprintf('Length of the seqence %d\n', length(seq));
-    fprintf('Compression ratio %f\n', rate);
+    fprintf('Compression ratio %f\n\n', rate);
 end
 
 function result=returnPartOfString(str,startindex,endindex)

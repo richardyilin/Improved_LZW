@@ -19,10 +19,11 @@ for name = file_names
     array = find(code > maxTableSize);
     assert(correct,'Decode incorrectly\nFile path %s\nbits_per_code %d\n',file_name,bit_per_code);
     assert(isempty(array),'max size overflow\nindex %d',array);
+    fprintf('File path: %s\n', file_name);
     fprintf('Decoding correctness %d\n',correct);
     fprintf('Length of the code %d\n', code_len);
     fprintf('Length of the seqence %d\n', length(input));
-    fprintf('Compression ratio %f\n', rate);
+    fprintf('Compression ratio %f\n\n', rate);
 end
 
 function output = norm2lzw (vector, maxTableSize, restartTable,threshold)

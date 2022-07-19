@@ -16,10 +16,11 @@ for name = file_names
     rate = (code_len/length(lzwInput));
     correct = isequal(lzwInput,decoded_sequence);
     assert(correct,'Decode incorrectly\nFile path %s\n',file_name);
+    fprintf('File path: %s\n', file_name);
     fprintf('Decoding correctness %d\n',correct);
     fprintf('Length of the code %d\n', code_len);
     fprintf('Length of the seqence %d\n', length(lzwInput));
-    fprintf('Compression ratio %f\n', rate);
+    fprintf('Compression ratio %f\n\n', rate);
 end
 
 function output = norm2lzw (vector, maxTableSize, restartTable)
