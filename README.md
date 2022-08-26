@@ -24,7 +24,7 @@
   3. `./src/Control_group/LZ77.m`The implementation of [LZ77](https://en.wikipedia.org/wiki/LZ77_and_LZ78#LZ77).
   4. `./src/Control_group/LZ78.m`The implementation of [LZ78](https://en.wikipedia.org/wiki/LZ77_and_LZ78#LZ78).
   5. `./src/Control_group/LZSS.m`The implementation of [Lempel–Ziv–Storer–Szymanski](https://en.wikipedia.org/wiki/Lempel%E2%80%93Ziv%E2%80%93Storer%E2%80%93Szymanski).
-  6. `./src/Control_group/Adaptive_arithmetic_coding.m`: The implementation of [adaptive arithmetic coding](https://en.wikipedia.org/wiki/Arithmetic_coding#:~:text=Adaptive%20arithmetic%20coding,-See%20also%3A%20Context&text=Adaptation%20is%20the%20changing%20of,same%20step%20as%20in%20encoding.).
+  6. `./src/Control_group/Adaptive_arithmetic_coding.m`: The implementation of [adaptive arithmetic coding](https://en.wikipedia.org/wiki/Arithmetic_coding#Adaptive_arithmetic_coding).
   7. `./src/Control_group/Static_arithmetic_coding.m`:The implementation of [arithmetic coding](https://en.wikipedia.org/wiki/Arithmetic_coding), with the pre-defined frequency table.
   8. `./src/Control_group/Huffman_coding.m`: The implementation of [Huffman coding](https://en.wikipedia.org/wiki/Huffman_coding).
   9. `./Test_patterns` Six test patterns used in the simulation.
