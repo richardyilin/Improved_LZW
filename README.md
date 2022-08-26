@@ -1,5 +1,13 @@
 # An Improved LZW Algorithm for Large Data Size and Low Bitwidth per Code
 
+## Table of contents
+
+<!--ts-->
+   * [About this repository](#about-this-repository)
+   * [The challenge this paper solves](#the-challenge-this-paper-solves)
+   * [Brief introduction to the algorithm](#brief-introduction-to-the-algorithm)
+<!--te-->
+
 ## About this repository
   This repository is about the paper "An Improved LZW Algorithm for Large Data Size and Low Bitwidth per Code" published on [TENCON 2021](https://tencon2021.com/). [Paper Link](https://ieeexplore.ieee.org/document/9707201)
 
